@@ -100,7 +100,10 @@ const Timeline: React.FC = () => {
           onComplete: () => {
             if (index === activePeriodIndex) {
               // В прямом направлении активируем лейбл только после завершения поворота
-              gsap.set(pointsRef.current[index], { className: "timeline__point timeline__point--active timeline__point--label" });
+              gsap.set(pointsRef.current[index], {
+                className:
+                  "timeline__point timeline__point--active timeline__point--label",
+              });
             }
           },
         });
@@ -131,7 +134,36 @@ const Timeline: React.FC = () => {
 
   return (
     <section className="timeline">
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+      {/* <svg
+        className="lines"
+        viewBox="0 170px 5px 290px"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <linearGradient
+            id="gradient"
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="100"
+          >
+            <stop offset="0%" stopColor="#EF5DA8" />
+            <stop offset="100%" stopColor="#5D5FEF" />
+          </linearGradient>
+        </defs>
+
+        <line
+          x1="0"
+          y1="0"
+          x2="0"
+          y2="100"
+          stroke="url(#gradient)"
+          strokeWidth="5"
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg> */}
+      <svg className="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
         <line
           x1="0"
           y1="0"
@@ -209,42 +241,53 @@ const Timeline: React.FC = () => {
           </div>
 
           <div className="timeline__navigation">
-            <button
-              className={`timeline__nav-button ${activePeriodIndex === 0 ? "timeline__nav-button--disabled" : ""}`}
-              onClick={() => handleNavigation("prev")}
-              disabled={activePeriodIndex === 0}
-              aria-label="Предыдущий период"
-            >
-              <svg viewBox="0 0 10 14" fill="none">
-                <path
-                  d="M8.5 1L2 7L8.5 13"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-
             <span className="timeline__counter">
               {String(activePeriodIndex + 1).padStart(2, "0")}/
               {String(totalPeriods).padStart(2, "0")}
             </span>
+            <div className="timeline__navigation--buttons">
+              <button
+                className={`timeline__nav-button ${activePeriodIndex === 0 ? "timeline__nav-button--disabled" : ""}`}
+                onClick={() => handleNavigation("prev")}
+                disabled={activePeriodIndex === 0}
+                key={0}
+              >
+                <svg
+                  width="9"
+                  height="14"
+                  viewBox="0 0 9 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.66418 0.707108L1.41419 6.95711L7.66418 13.2071"
+                    stroke="#42567A"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </button>
 
-            <button
-              className={`timeline__nav-button ${activePeriodIndex === totalPeriods - 1 ? "timeline__nav-button--disabled" : ""}`}
-              onClick={() => handleNavigation("next")}
-              disabled={activePeriodIndex === totalPeriods - 1}
-              aria-label="Следующий период"
-            >
-              <svg viewBox="0 0 10 14" fill="none">
-                <path
-                  d="M1.5 1L8 7L1.5 13"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
+              <button
+                className={`timeline__nav-button ${activePeriodIndex === totalPeriods - 1 ? "timeline__nav-button--disabled" : ""}`}
+                onClick={() => handleNavigation("next")}
+                disabled={activePeriodIndex === totalPeriods - 1}
+                key={1}
+              >
+                <svg
+                  width="9"
+                  height="14"
+                  viewBox="0 0 9 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.707092 0.707108L6.95709 6.95711L0.707093 13.2071"
+                    stroke="#42567A"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
 
           <div className="timeline__events">

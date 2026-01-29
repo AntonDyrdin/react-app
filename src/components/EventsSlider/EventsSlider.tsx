@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, EffectFade } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { type TimelineEvent } from '../../types/timeline';
 import 'swiper/css';
@@ -25,9 +25,12 @@ const EventsSlider: React.FC<EventsSliderProps> = ({ events }) => {
       <div className="events-slider__container">
         <Swiper
           onSwiper={setSwiperInstance}
-          modules={[Navigation]}
+          modules={[Navigation, EffectFade]}
           spaceBetween={80}
-          slidesPerView="auto"
+          slidesPerView={3}
+          allowTouchMove={true}
+          grabCursor={true}
+          fadeEffect={{ crossFade: true }}
           navigation={{
             nextEl: '.events-slider .swiper-button-next',
             prevEl: '.events-slider .swiper-button-prev',
@@ -43,7 +46,7 @@ const EventsSlider: React.FC<EventsSliderProps> = ({ events }) => {
             },
             1024: {
               slidesPerView: 3,
-              spaceBetween: 80,
+              spaceBetween: 40,
             },
           }}
         >
@@ -52,7 +55,6 @@ const EventsSlider: React.FC<EventsSliderProps> = ({ events }) => {
               <div className="events-slider__event">
                 <div className="events-slider__event__year">{event.year}</div>
                 <div className="events-slider__event__title">{event.title}</div>
-                <div className="events-slider__event__description">{event.description}</div>
               </div>
             </SwiperSlide>
           ))}
