@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, EffectFade } from 'swiper/modules';
-import type { Swiper as SwiperType } from 'swiper';
-import { type TimelineEvent } from '../../types/timeline';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import './EventsSlider.scss';
+import React, { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, EffectFade } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import { type TimelineEvent } from "../../types/timeline";
+import "swiper/css";
+import "swiper/css/navigation";
+import "./EventsSlider.scss";
 
 interface EventsSliderProps {
   events: TimelineEvent[];
@@ -21,47 +21,50 @@ const EventsSlider: React.FC<EventsSliderProps> = ({ events }) => {
   }, [events, swiperInstance]);
 
   return (
-    <div className="events-slider">
-      <div className="events-slider__container">
-        <Swiper
-          onSwiper={setSwiperInstance}
-          modules={[Navigation, EffectFade]}
-          spaceBetween={80}
-          slidesPerView={3}
-          allowTouchMove={true}
-          grabCursor={true}
-          fadeEffect={{ crossFade: true }}
-          navigation={{
-            nextEl: '.events-slider .swiper-button-next',
-            prevEl: '.events-slider .swiper-button-prev',
-          }}
-          breakpoints={{
-            320: {
-              slidesPerView: 1.2,
-              spaceBetween: 25,
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 40,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 40,
-            },
-          }}
-        >
-          {events.map((event, index) => (
-            <SwiperSlide key={`${event.year}-${index}`} className="events-slider__slide">
-              <div className="events-slider__event">
-                <div className="events-slider__event__year">{event.year}</div>
-                <div className="events-slider__event__title">{event.title}</div>
-              </div>
-            </SwiperSlide>
-          ))}
-          <div className="swiper-button-next"></div>
-          <div className="swiper-button-prev"></div>
-        </Swiper>
-      </div>
+    <div className="row">
+      <Swiper
+        className="events-slider"
+        onSwiper={setSwiperInstance}
+        spaceBetween={80}
+        slidesPerView={"auto"}
+        allowTouchMove={true}
+        grabCursor={true}
+        modules={[Navigation]}
+        navigation={{
+          nextEl: "#swiper-button-next",
+          prevEl: "#swiper-button-prev",
+        }}
+      >
+        {events.map((event, index) => (
+          <SwiperSlide
+            key={`${event.year}-${index}`}
+            className="events-slider__slide"
+          >
+            <div className="events-slider__event">
+              <div className="events-slider__event__year">{event.year}</div>
+              <div className="events-slider__event__title">{event.title}</div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <button id="swiper-button-next">
+        <svg viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0.707093 0.707092L5.70709 5.70709L0.707093 10.7071"
+            stroke="#3877EE"
+            strokeWidth="2"
+          />
+        </svg>
+      </button>
+      <button id="swiper-button-prev">
+        <svg viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0.707093 0.707092L5.70709 5.70709L0.707093 10.7071"
+            stroke="#3877EE"
+            strokeWidth="2"
+          />
+        </svg>
+      </button>
     </div>
   );
 };

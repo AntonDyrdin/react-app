@@ -104,6 +104,10 @@ const Timeline: React.FC = () => {
                 className:
                   "timeline__point timeline__point--active timeline__point--label",
               });
+            } else {
+              gsap.set(pointsRef.current[index], {
+                className: "timeline__point",
+              });
             }
           },
         });
@@ -134,164 +138,156 @@ const Timeline: React.FC = () => {
 
   return (
     <section className="timeline">
-      {/* <svg
-        className="lines"
-        viewBox="0 170px 5px 290px"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient
-            id="gradient"
-            gradientUnits="userSpaceOnUse"
+      <div className="timeline__margin_left">
+        <svg className="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line
             x1="0"
             y1="0"
             x2="0"
             y2="100"
-          >
-            <stop offset="0%" stopColor="#EF5DA8" />
-            <stop offset="100%" stopColor="#5D5FEF" />
-          </linearGradient>
-        </defs>
+            stroke="rgba(66, 86, 122, 0.1)"
+            strokeWidth="1"
+            vectorEffect="non-scaling-stroke"
+          />
+          <line
+            x1="100"
+            y1="0"
+            x2="100"
+            y2="100"
+            stroke="rgba(66, 86, 122, 0.1)"
+            strokeWidth="1px"
+            vectorEffect="non-scaling-stroke"
+          />
+          <line
+            x1="50"
+            y1="0"
+            x2="50"
+            y2="100"
+            stroke="rgba(66, 86, 122, 0.1)"
+            strokeWidth="1px"
+            vectorEffect="non-scaling-stroke"
+          />
+          <line
+            x1="0"
+            y1="50"
+            x2="100"
+            y2="50"
+            stroke="rgba(66, 86, 122, 0.1)"
+            strokeWidth="1px"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+        <div className="timeline__container">
+          <header className="timeline__header">
+            <h1 className="timeline__title">
+              Исторические
+              <br />
+              даты
+            </h1>
+          </header>
 
-        <line
-          x1="0"
-          y1="0"
-          x2="0"
-          y2="100"
-          stroke="url(#gradient)"
-          strokeWidth="5"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg> */}
-      <svg className="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <line
-          x1="0"
-          y1="0"
-          x2="0"
-          y2="100"
-          stroke="rgba(66, 86, 122, 0.1)"
-          strokeWidth="1"
-          vectorEffect="non-scaling-stroke"
-        />
-        <line
-          x1="100"
-          y1="0"
-          x2="100"
-          y2="100"
-          stroke="rgba(66, 86, 122, 0.1)"
-          strokeWidth="1px"
-          vectorEffect="non-scaling-stroke"
-        />
-        <line
-          x1="50"
-          y1="0"
-          x2="50"
-          y2="100"
-          stroke="rgba(66, 86, 122, 0.1)"
-          strokeWidth="1px"
-          vectorEffect="non-scaling-stroke"
-        />
-        <line
-          x1="0"
-          y1="50"
-          x2="100"
-          y2="50"
-          stroke="rgba(66, 86, 122, 0.1)"
-          strokeWidth="1px"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
-      <div className="timeline__container">
-        <header className="timeline__header">
-          <h1 className="timeline__title">
-            Исторические
-            <br />
-            даты
-          </h1>
-        </header>
-
-        <div className="timeline__content">
-          <div className="timeline__years">
-            <h2
-              ref={startYearRef}
-              className="timeline__year timeline__year--start"
-            >
-              {animatedStartYear}
-            </h2>
-            <h2 ref={endYearRef} className="timeline__year timeline__year--end">
-              {animatedEndYear}
-            </h2>
-          </div>
-
-          <div className="timeline__circle">
-            {timelineData.periods.map((period, index) => (
-              <div
-                key={period.id}
-                ref={(el) => {
-                  el ? (pointsRef.current[index] = el) : "";
-                }}
-                className={`timeline__point ${
-                  index === activePeriodIndex ? "timeline__point--active" : ""
-                }`}
-                onClick={() => setActivePeriod(index)}
-                data-number={period.id}
-                data-title={period.title}
-              />
-            ))}
-          </div>
-
-          <div className="timeline__navigation">
-            <span className="timeline__counter">
-              {String(activePeriodIndex + 1).padStart(2, "0")}/
-              {String(totalPeriods).padStart(2, "0")}
-            </span>
-            <div className="timeline__navigation--buttons">
-              <button
-                className={`timeline__nav-button ${activePeriodIndex === 0 ? "timeline__nav-button--disabled" : ""}`}
-                onClick={() => handleNavigation("prev")}
-                disabled={activePeriodIndex === 0}
-                key={0}
+          <div className="timeline__content">
+            <div className="timeline__years">
+              <h2
+                ref={startYearRef}
+                className="timeline__year timeline__year--start"
               >
-                <svg
-                  width="9"
-                  height="14"
-                  viewBox="0 0 9 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7.66418 0.707108L1.41419 6.95711L7.66418 13.2071"
-                    stroke="#42567A"
-                    strokeWidth="2"
-                  />
-                </svg>
-              </button>
-
-              <button
-                className={`timeline__nav-button ${activePeriodIndex === totalPeriods - 1 ? "timeline__nav-button--disabled" : ""}`}
-                onClick={() => handleNavigation("next")}
-                disabled={activePeriodIndex === totalPeriods - 1}
-                key={1}
+                {animatedStartYear}
+              </h2>
+              <h2
+                ref={endYearRef}
+                className="timeline__year timeline__year--end"
               >
-                <svg
-                  width="9"
-                  height="14"
-                  viewBox="0 0 9 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0.707092 0.707108L6.95709 6.95711L0.707093 13.2071"
-                    stroke="#42567A"
-                    strokeWidth="2"
-                  />
-                </svg>
-              </button>
+                {animatedEndYear}
+              </h2>
             </div>
-          </div>
 
-          <div className="timeline__events">
-            <EventsSlider events={currentPeriod.events} />
+            <div className="timeline__circle">
+              <svg
+                className="timeline__circle-svg"
+                width="530"
+                height="530"
+                viewBox="0 0 530 530"
+              >
+                <circle
+                  cx="265"
+                  cy="265"
+                  r="265"
+                  fill="none"
+                  stroke="rgba(66, 86, 122, 0.1)"
+                  strokeWidth="1"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+              {timelineData.periods.map((period, index) => (
+                <div
+                  key={period.id}
+                  ref={(el) => {
+                    el ? (pointsRef.current[index] = el) : "";
+                  }}
+                  className={`timeline__point ${
+                    index === activePeriodIndex ? "timeline__point--active" : ""
+                  }`}
+                  onClick={() => setActivePeriod(index)}
+                  data-number={period.id}
+                  data-title={period.title}
+                />
+              ))}
+            </div>
+
+            <div className="timeline__navigation">
+              <span className="timeline__counter">
+                {String(activePeriodIndex + 1).padStart(2, "0")}/
+                {String(totalPeriods).padStart(2, "0")}
+              </span>
+              <div className="timeline__navigation--buttons">
+                <button
+                  className={`timeline__nav-button ${activePeriodIndex === 0 ? "timeline__nav-button--disabled" : ""}`}
+                  onClick={() => handleNavigation("prev")}
+                  disabled={activePeriodIndex === 0}
+                  key={0}
+                >
+                  <svg
+                    width="9"
+                    height="14"
+                    viewBox="0 0 9 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.66418 0.707108L1.41419 6.95711L7.66418 13.2071"
+                      stroke="#42567A"
+                      strokeWidth="2"
+                    />
+                  </svg>
+                </button>
+
+                <button
+                  className={`timeline__nav-button ${activePeriodIndex === totalPeriods - 1 ? "timeline__nav-button--disabled" : ""}`}
+                  onClick={() => handleNavigation("next")}
+                  disabled={activePeriodIndex === totalPeriods - 1}
+                  key={1}
+                >
+                  <svg
+                    width="9"
+                    height="14"
+                    viewBox="0 0 9 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0.707092 0.707108L6.95709 6.95711L0.707093 13.2071"
+                      stroke="#42567A"
+                      strokeWidth="2"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="timeline__events">
+              <EventsSlider events={currentPeriod.events} />
+            </div>
           </div>
         </div>
       </div>

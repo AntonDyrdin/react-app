@@ -2,7 +2,7 @@
 
 .timeline {
   position: relative;
-  max-width: 1440px;
+  max-width: 1600px;
   height: 100vh;
   margin: 0 auto;
 
@@ -14,11 +14,16 @@
     z-index: 0;
   }
 
+  &__margin_left {
+    margin-left: 160px;
+    position: relative;
+  }
+
   &__container {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding: 170px 0 104px 80px;
+    padding: 170px 80px 104px 80px;
   }
 
   &__header {
@@ -67,12 +72,11 @@
   }
 
   &__year {
-    font-family: "PT Sans", sans-serif;
     font-size: 200px;
     font-weight: 700;
     line-height: 160px;
-    letter-spacing: -0.02em;
-    margin: 0;
+    letter-spacing: -2%;
+    text-align: center;
 
     &--start {
       color: #5d5fef;
@@ -85,12 +89,17 @@
 
   &__circle {
     position: absolute;
-    left: calc(50% - 530px / 2);
-    top: calc(50% - 530px / 2);
+    left: 50%;
+    top: 50%;
     width: 530px;
     height: 530px;
-    border: 1px solid $black-blue-10;
-    border-radius: 50%;
+    transform: translate(-50%, -50%);
+
+    svg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
   }
 
   &__point {
@@ -117,7 +126,6 @@
     &::before {
       position: absolute;
       content: attr(data-number);
-      font-family: "PT Sans", sans-serif;
       font-size: 20px;
       font-weight: 400;
       color: $black-blue;
@@ -141,7 +149,6 @@
       top: 50%;
       transform: translateY(-50%);
       margin-left: 20px;
-      font-family: "PT Sans", sans-serif;
       font-size: 20px;
       font-weight: 700;
       color: $black-blue;
@@ -186,7 +193,6 @@
   }
 
   &__counter {
-    font-family: "PT Sans", sans-serif;
     font-size: 14px;
     color: #42567a;
   }
