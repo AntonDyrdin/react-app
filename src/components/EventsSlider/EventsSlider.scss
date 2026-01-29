@@ -1,0 +1,146 @@
+@use "./../../theme.scss" as *;
+
+.events-slider {
+  width: 100%;
+
+  &__container {
+    position: relative;
+  }
+
+  &__slide {
+    width: auto !important;
+    padding: 0 40px 0 0;
+  }
+
+  &__event {
+    &__year {
+      font-family: 'PT Sans', sans-serif;
+      font-size: 25px;
+      font-weight: 400;
+      line-height: 30px;
+      color: #3877ee;
+      margin: 0 0 15px 0;
+      text-transform: uppercase;
+    }
+
+    &__title {
+      font-family: 'PT Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 30px;
+      color: #42567a;
+      margin: 0 0 15px 0;
+    }
+
+    &__description {
+      font-family: 'PT Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 30px;
+      color: #42567a;
+      margin: 0;
+    }
+  }
+
+  .swiper {
+    overflow: visible;
+    padding: 20px 0;
+  }
+
+  .swiper-slide {
+    height: auto;
+    width: auto;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    background: $kinda-white;
+    border: 1px solid rgba(66, 86, 122, 0.5);
+    border-radius: 50%;
+    color: #42567a;
+    z-index: 10;
+    
+    &::after {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    &:hover {
+      background: #42567a;
+      color: $kinda-white;
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      
+      &:hover {
+        background: $kinda-white;
+        color: #42567a;
+      }
+    }
+  }
+
+  .swiper-button-next {
+    right: -60px;
+  }
+
+  .swiper-button-prev {
+    left: -60px;
+  }
+
+  @media (max-width: 1024px) {
+    .swiper-button-next {
+      right: -50px;
+    }
+
+    .swiper-button-prev {
+      left: -50px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__slide {
+      padding: 0 20px 0 0;
+    }
+
+    &__event {
+      &__year {
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      &__title {
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      &__description {
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      width: 30px;
+      height: 30px;
+      margin-top: -15px;
+
+      &::after {
+        font-size: 10px;
+      }
+    }
+
+    .swiper-button-next {
+      right: -40px;
+    }
+
+    .swiper-button-prev {
+      left: -40px;
+    }
+  }
+}

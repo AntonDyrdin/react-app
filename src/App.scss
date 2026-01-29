@@ -1,0 +1,11 @@
+@use "./theme.scss" as *;
+
+.App {
+  min-height: 100vh;
+  width: 100%;
+  background: $kinda-white;
+}
+
+body {
+  font-family: 'PT Sans', sans-serif;
+}
