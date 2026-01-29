@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import EventsSlider from "../EventsSlider/EventsSlider";
 import { timelineData } from "../../data/timelineData";
+import { TimelinePeriod } from "../../types/timeline";
 import "./Timeline.scss";
 
 const RADIUS = 265;
@@ -10,18 +11,21 @@ const RADIUS = 265;
 export const degToRad = (deg: number) => (deg * Math.PI) / 180;
 
 const Timeline: React.FC = () => {
-  const [activePeriodIndex, setActivePeriod] = useState<number>(5); // Начинаем с "Наука" (индекс 5)
+  const [activePeriodIndex, setActivePeriod] = useState<number>(5);
   const [animatedStartYear, setAnimatedStartYear] = useState<number>(
     timelineData.periods[5].startYear,
   );
   const [animatedEndYear, setAnimatedEndYear] = useState<number>(
     timelineData.periods[5].endYear,
   );
+  const [currentPeriod, setCurrentPeriod] = useState<TimelinePeriod>(
+    timelineData.periods[activePeriodIndex],
+  );
 
   const startYearRef = useRef<HTMLHeadingElement>(null);
   const endYearRef = useRef<HTMLHeadingElement>(null);
+  const eventsRef = useRef<HTMLDivElement>(null);
 
-  const currentPeriod = timelineData.periods[activePeriodIndex];
   const totalPeriods = timelineData.periods.length;
   const pointsRef = useRef<HTMLDivElement[]>([]);
 
@@ -53,6 +57,7 @@ const Timeline: React.FC = () => {
   );
 
   const anglesRef = useRef<number[]>([]);
+  // Появление точек после инициализации компонента
   useGSAP(() => {
     const step = 360 / timelineData.periods.length;
 
@@ -87,7 +92,7 @@ const Timeline: React.FC = () => {
 
         gsap.to(angleObj, {
           value: toAngle,
-          duration: 0.5,
+          duration: 1,
           ease: "power2.inOut",
           onUpdate: () => {
             anglesRef.current[index] = angleObj.value;
@@ -112,6 +117,46 @@ const Timeline: React.FC = () => {
           },
         });
       });
+    },
+    { dependencies: [activePeriodIndex] },
+  );
+
+  // fade-эффект слайдера
+  useGSAP(
+    () => {
+      if (!eventsRef.current) return;
+
+      gsap
+        .timeline()
+        .fromTo(
+          eventsRef.current,
+          {
+            autoAlpha: 1,
+            y: 0,
+          },
+          {
+            autoAlpha: 0,
+            duration: 1,
+            y: 0,
+            ease: "cubic-bezier(0,.8,0,1)",
+          },
+        )
+        .add(() => {
+          setCurrentPeriod(timelineData.periods[activePeriodIndex]);
+        })
+        .fromTo(
+          eventsRef.current,
+          {
+            autoAlpha: 0,
+            y: 10,
+          },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.3,
+            ease: "cubic-bezier(0,.8,0,1)",
+          },
+        );
     },
     { dependencies: [activePeriodIndex] },
   );
@@ -285,7 +330,7 @@ const Timeline: React.FC = () => {
               </div>
             </div>
 
-            <div className="timeline__events">
+            <div className="timeline__events" ref={eventsRef}>
               <EventsSlider events={currentPeriod.events} />
             </div>
           </div>
