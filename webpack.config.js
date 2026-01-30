@@ -8,7 +8,7 @@ module.exports = {
   mode: isDev ? "development" : "production",
   entry: "./src/index.tsx",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "build"),
     filename: "bundle.[contenthash].js",
     clean: true,
   },

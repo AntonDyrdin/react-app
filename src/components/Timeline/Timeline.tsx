@@ -192,7 +192,7 @@ const Timeline: React.FC = () => {
 
   return (
     <section className="timeline">
-      <div className="timeline__margin_left">
+      <div className="timeline__margin-left">
         <svg className="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
           <line
             x1="0"
