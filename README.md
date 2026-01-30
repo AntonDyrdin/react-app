@@ -1,4 +1,4 @@
-https://react-f2wbaeejt-antondyrdins-projects.vercel.app
+https://react-app-three-red.vercel.app
 
 ## Окружение
 - Node.js v24.13.0  
