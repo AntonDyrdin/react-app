@@ -126,7 +126,7 @@ const Timeline: React.FC = () => {
   // fade-эффект слайдера
   useGSAP(
     () => {
-      if (!eventsRef.current) return;
+      if (!eventsRef.current || timelineData.periods[activePeriodIndex] === currentPeriod) return;
 
       gsap
         .timeline({
@@ -138,7 +138,7 @@ const Timeline: React.FC = () => {
           eventsRef.current,
           {
             // TODO: костыльное решение анимации слайдера при быстром переключении периодов
-            ...(isAnimationInProg ? { autoAlpha: 0 } : {}),
+            ...(!isAnimationInProg ? { autoAlpha: 1 } : {}),
             y: 0,
           },
           {
@@ -255,6 +255,8 @@ const Timeline: React.FC = () => {
                 {animatedEndYear}
               </h2>
             </div>
+
+            <div className="timeline__break-line"/>
 
             <div className="timeline__circle">
               <svg

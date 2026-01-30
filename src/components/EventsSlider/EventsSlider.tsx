@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, EffectFade } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { type TimelineEvent } from "../../types/timeline";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 import "./EventsSlider.scss";
 
 interface EventsSliderProps {
@@ -21,7 +22,7 @@ const EventsSlider: React.FC<EventsSliderProps> = ({ events }) => {
   }, [events, swiperInstance]);
 
   return (
-    <div className="row">
+    <div className="outer-container">
       <Swiper
         className="events-slider"
         onSwiper={setSwiperInstance}
@@ -29,10 +30,18 @@ const EventsSlider: React.FC<EventsSliderProps> = ({ events }) => {
         slidesPerView={"auto"}
         allowTouchMove={true}
         grabCursor={true}
-        modules={[Navigation]}
+        modules={[Navigation, Pagination]}
         navigation={{
           nextEl: "#swiper-button-next",
           prevEl: "#swiper-button-prev",
+        }}
+        pagination={{
+          el: ".events-slider__pagination",
+          clickable: true,
+        }}
+        breakpoints={{
+          1024: { slidesPerView: 3, spaceBetween: 80 },
+          320: { slidesPerView: 1.6, spaceBetween: 10 },
         }}
       >
         {events.map((event, index) => (
@@ -47,6 +56,7 @@ const EventsSlider: React.FC<EventsSliderProps> = ({ events }) => {
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="events-slider__pagination" />
       <button id="swiper-button-next">
         <svg viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
