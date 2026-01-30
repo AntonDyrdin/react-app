@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -38,6 +39,13 @@ module.exports = {
           "sass-loader",
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico|xml|json)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "[name][ext]",
+        },
+      },
     ],
   },
   plugins: [
@@ -47,6 +55,11 @@ module.exports = {
     }),
     !isDev && new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css",
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: "public", globOptions: { ignore: ["**/index.html"] } },
+      ],
     }),
   ].filter(Boolean),
 };
