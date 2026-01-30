@@ -10,6 +10,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.[contenthash].js",
+    publicPath: "/",
     clean: true,
   },
   resolve: {
@@ -42,6 +43,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "public/index.html",
+      inject: "body",
     }),
     !isDev && new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css",
