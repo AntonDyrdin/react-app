@@ -9,14 +9,15 @@ import "./Timeline.scss";
 const RADIUS = 265;
 
 export const degToRad = (deg: number) => (deg * Math.PI) / 180;
+const lastPeriodIndex = timelineData.periods.length - 1;
 
 const Timeline: React.FC = () => {
-  const [activePeriodIndex, setActivePeriod] = useState<number>(5);
+  const [activePeriodIndex, setActivePeriod] = useState<number>(lastPeriodIndex);
   const [animatedStartYear, setAnimatedStartYear] = useState<number>(
-    timelineData.periods[5].startYear,
+    timelineData.periods[lastPeriodIndex].startYear,
   );
   const [animatedEndYear, setAnimatedEndYear] = useState<number>(
-    timelineData.periods[5].endYear,
+    timelineData.periods[lastPeriodIndex].endYear,
   );
   const [currentPeriod, setCurrentPeriod] = useState<TimelinePeriod>(
     timelineData.periods[activePeriodIndex],
