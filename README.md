@@ -1,3 +1,5 @@
+https://react-f2wbaeejt-antondyrdins-projects.vercel.app
+
 ## Окружение
 - Node.js v24.13.0  
 - npm v11.6.2  
