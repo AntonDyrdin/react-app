@@ -17,7 +17,7 @@ const EventsSlider: React.FC<EventsSliderProps> = ({ events }) => {
 
   useEffect(() => {
     if (swiperInstance) {
-      swiperInstance.slideTo(0, 0); // 0 - индекс слайда, 0 - скорость (мгновенно)
+      swiperInstance.slideTo(0, 0);
     }
   }, [events, swiperInstance]);
 

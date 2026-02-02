@@ -23,8 +23,6 @@ const Timeline: React.FC = () => {
     timelineData.periods[activePeriodIndex],
   );
 
-  const [isAnimationInProg, setIsAnimationInProg] = useState<boolean>(false);
-
   const startYearRef = useRef<HTMLHeadingElement>(null);
   const endYearRef = useRef<HTMLHeadingElement>(null);
   const eventsRef = useRef<HTMLDivElement>(null);
@@ -128,18 +126,14 @@ const Timeline: React.FC = () => {
   useGSAP(
     () => {
       if (!eventsRef.current || timelineData.periods[activePeriodIndex] === currentPeriod) return;
+      gsap.killTweensOf(eventsRef.current);
 
       gsap
-        .timeline({
-          onStart: () => {
-            setIsAnimationInProg(true);
-          },
-        })
+        .timeline()
         .fromTo(
           eventsRef.current,
           {
-            // TODO: костыльное решение анимации слайдера при быстром переключении периодов
-            ...(!isAnimationInProg ? { autoAlpha: 1 } : {}),
+            autoAlpha: 1 ,
             y: 0,
           },
           {
@@ -148,7 +142,6 @@ const Timeline: React.FC = () => {
             y: 0,
             ease: "cubic-bezier(0,.8,0,1)",
             onComplete: () => {
-              setIsAnimationInProg(false);
               setCurrentPeriod(timelineData.periods[activePeriodIndex]);
             },
             overwrite: true,
