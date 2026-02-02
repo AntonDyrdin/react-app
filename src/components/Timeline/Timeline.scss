@@ -75,7 +75,6 @@
     font-size: 200px;
     font-weight: 700;
     line-height: 160px;
-    letter-spacing: -2%;
     text-align: center;
 
     &--start {
@@ -220,6 +219,8 @@
 
   &__events {
     width: 100%;
+    display: block;
+    opacity: 1;
   }
 
   @media (max-width: 1024px) {

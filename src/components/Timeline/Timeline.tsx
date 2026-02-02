@@ -124,51 +124,36 @@ const Timeline: React.FC = () => {
 
   // fade-эффект слайдера
   useGSAP(
-    () => {
-      if (!eventsRef.current || timelineData.periods[activePeriodIndex] === currentPeriod) return;
-      gsap.killTweensOf(eventsRef.current);
-
-      gsap
-        .timeline()
-        .fromTo(
-          eventsRef.current,
-          {
-            autoAlpha: 1 ,
-            y: 0,
-          },
-          {
-            autoAlpha: 0,
-            duration: 1,
-            y: 0,
-            ease: "cubic-bezier(0,.8,0,1)",
-            onComplete: () => {
-              setCurrentPeriod(timelineData.periods[activePeriodIndex]);
+    async () => {
+      if (
+        !eventsRef.current ||
+        timelineData.periods[activePeriodIndex] === currentPeriod
+      )
+        return;
+        gsap.killTweensOf(eventsRef.current);
+      const tl = gsap.timeline();
+      tl.to(eventsRef.current, {
+        autoAlpha: 0,
+        duration: 1,
+        ease: "cubic-bezier(0,.8,0,1)",
+        onComplete: () => {
+          setCurrentPeriod(timelineData.periods[activePeriodIndex]);
+          gsap.fromTo(
+            eventsRef.current,
+            { autoAlpha: 0, y: 6 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.3,
+              ease: "cubic-bezier(0,.8,0,1)",
+              overwrite: true,
             },
-            overwrite: true,
-          },
-        )
-        .fromTo(
-          eventsRef.current,
-          {
-            autoAlpha: 0,
-            y: 6,
-          },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.3,
-            ease: "cubic-bezier(0,.8,0,1)",
-          },
-        );
+          );
+        },
+      });
     },
     { dependencies: [activePeriodIndex] },
   );
-
-  const handlePeriodChange = (index: number) => {
-    if (index !== activePeriodIndex) {
-      setActivePeriod(index);
-    }
-  };
 
   const handleNavigation = (direction: "prev" | "next") => {
     let newIndex = activePeriodIndex;
@@ -180,7 +165,7 @@ const Timeline: React.FC = () => {
     }
 
     if (newIndex !== activePeriodIndex) {
-      handlePeriodChange(newIndex);
+      setActivePeriod(newIndex);
     }
   };
 
@@ -250,7 +235,7 @@ const Timeline: React.FC = () => {
               </h2>
             </div>
 
-            <div className="timeline__break-line"/>
+            <div className="timeline__break-line" />
 
             <div className="timeline__circle">
               <svg
